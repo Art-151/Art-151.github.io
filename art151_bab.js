@@ -46,20 +46,25 @@ function discreteAnim(type, dim, pos1, pos2, frameRate, seconds) {
     return anim;
 }
 //load and place object in scene
-function placeObject(folder, file, position, scene, scale = 1, rotation = new BABYLON.Vector3(0, 0, 0), wrap_color = new BABYLON.Color3(0.5, 0.5, 0.5)){
-    let object = BABYLON.SceneLoader.ImportMesh(
+function placeObject(folder, file, position, scene, scale = 1, rotation = new BABYLON.Vector3(0, 0, 0), wrap_color = false){
+    let load = BABYLON.SceneLoader.ImportMesh(
         null,
          folder,
         file,
         scene,
-        function (meshes) { 
-           for (const mesh of meshes) { 
+        function (meshes) {
+           for (const mesh of meshes) {
             mesh.position = position;
             mesh.rotation = rotation;
             mesh.scaling = new BABYLON.Vector3(scale, scale, scale);
-            var mat = new BABYLON.StandardMaterial("material", scene);
-            mat.diffuseColor = wrap_color;
-            mesh.material = mat;  
-           }                 
+            if(wrap_color){
+                var mat = new BABYLON.StandardMaterial("material", scene);
+                mat.diffuseColor = wrap_color;
+                mesh.material = mat;
+            }
+           }
+
+
     });
+
 }
